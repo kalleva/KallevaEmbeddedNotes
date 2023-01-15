@@ -273,7 +273,6 @@ pc 0x08000010
 ```
 
 - Hit **Step** button. ```1``` in  ```r0``` is incremented and becomes ```2```.
-![008.jpg](./images/008.jpg)
 ```asm
 r1 0x00000002
 r2 0xFFFFFFFF
