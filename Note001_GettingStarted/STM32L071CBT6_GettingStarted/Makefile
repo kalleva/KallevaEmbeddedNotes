@@ -1,5 +1,5 @@
 # Makefile for compiling ARM Cortex-M0 assembly projects.
-TARGET = 001
+TARGET = STM32L071CBT6_GettingStarted
 
 # Define the linker script location and chip architecture.
 LD_SCRIPT = STM32L071CBT6.ld
