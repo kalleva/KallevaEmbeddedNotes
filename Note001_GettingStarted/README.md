@@ -9,7 +9,7 @@ My post is adapted version for my workflow on Windows. You can view code in [Not
 1. Install [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
 
 2. Install [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/gnu-rm)
-    and add ```GNU Arm Embedded Toolchain\10 2021.10\bin`` to Windows Environment Variables PATH so you can call toolchain modules
+    and add ```GNU Arm Embedded Toolchain\10 2021.10\bin``` to Windows Environment Variables PATH so you can call toolchain modules
     without prefixing path. Makefile I use is counting on that.
 
 3. Install MinGW and add it to Windows Environment Variables PATH so you can call mingw32-make.exe
@@ -18,7 +18,7 @@ My post is adapted version for my workflow on Windows. You can view code in [Not
 
 ## Walkthrough
 
-1. Create minimal linker script **STM32L071CBT6.ld**.
+### 1. Create minimal linker script **STM32L071CBT6.ld**.
 We need to  tell compiler linker how much FLASH for storing program code and how much RAM chip has.
 And we need to set the value of the end of the stack in _estack (0x20000000 + 20K).
 
@@ -32,7 +32,7 @@ MEMORY
 }
 ```
 
-2. Create file assembly file core.s
+### 2. Create file assembly file core.s
 
 First 4 lines describe cpu and syntax for compiler.
 
@@ -75,8 +75,8 @@ And the defines label ```main_loop```, after that it increments value in r0 and 
 
 And this is it. Now we need to compile it and watch it run live.
 
-3. Compiling
-I took Makefile from https://github.com/WRansohoff/STM32F0_minimal/blob/master/Makefile and a little adapted it.
+### 3. Compiling
+I took Makefile from [vivonimicon Makefile](https://github.com/WRansohoff/STM32F0_minimal/blob/master/Makefile) and a little adapted it.
 
 ```Makefile
 # Makefile for compiling ARM Cortex-M0 assembly projects.
@@ -134,7 +134,7 @@ clean:
 
 When you run mingw32-make.exe you should get 001.elf file.
 
-4. Lets inspect what we got:
+### 4. Lets inspect what we got:
 
 Run ```arm-none-eabi-nm.exe 001.elf``` and you should get this:
 
@@ -175,7 +175,9 @@ First you can see that it indeed use Thumb mode for because instructions are 16-
 Next you can see that first we load ```_eastack``` ```0x20005000``` to the ```sp```.
 Then we put ```0xDEADBEEF``` to ```r7``` and ```0``` to ```r0``` and start incrementing ```r0``` in ```main_loop```.
 
-5. Now it's time to load 001.elf to the MCU and make sure that program runs as expected.
+### 5. Running code
+
+Now it's time to load 001.elf to the MCU and make sure that program runs as expected.
 Start STM32CubeProgrammer and connect to device via SWD. Go it's **Erasing&Programming** page and load 001.elf to the board.
 In newer version of STM32CubeProgrammer there is a page **MCU core** that lets you debug your code on MCU.
 So go **MCU core** page where we go through code step by step.
