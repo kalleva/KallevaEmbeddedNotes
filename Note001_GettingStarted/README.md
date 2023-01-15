@@ -1,6 +1,6 @@
 # Running simple assembly on STM32L071CBT6
 
-This post is heavily indebted to the wonderful series of blog posts on https://vivonomicon.com/2018/04/02/bare-metal-stm32-programming-part-1-hello-arm/ definitely go and check it out I got started with baremetal stm32 from him.
+This post is heavily indebted to the wonderful series of blog posts on [bare-metal-stm32-programming-part-1-hello-arm by vivonomicon](https://vivonomicon.com/2018/04/02/bare-metal-stm32-programming-part-1-hello-arm/) definitely go and check it out I got started with baremetal stm32 from him.
 
 My post is adapted version for my workflow on Windows. You can view code in [Note001_GettingStarted](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note001_GettingStarted)
 
