@@ -1,6 +1,6 @@
 # Running simple assembly on STM32L071CBT6
 
-This post is heavily indebted to the wonderful series of blog posts on [bare-metal-stm32-programming-part-1-hello-arm by vivonomicon](https://vivonomicon.com/2018/04/02/bare-metal-stm32-programming-part-1-hello-arm/) definitely go and check it out I got started with baremetal stm32 from him.
+This post is heavily indebted to the wonderful series of blog posts on [bare-metal-stm32-programming-part-1-hello-arm by vivonomicon](https://vivonomicon.com/2018/04/02/bare-metal-stm32-programming-part-1-hello-arm/) definitely go and check it out. I got started with baremetal stm32 from him.
 
 My post is adapted version for my workflow on Windows. You can view code in [Note001_GettingStarted](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note001_GettingStarted)
 
@@ -16,10 +16,12 @@ My post is adapted version for my workflow on Windows. You can view code in [Not
 
 4. Get debug probe for flashing and debugging your MCU via SWD.
 
+5. Get Datasheet, Reference manual, Programming manual, Errdata for your MCU.
+
 ## Walkthrough
 
 ### 1. Create minimal linker script **STM32L071CBT6.ld**.
-We need to  tell compiler linker how much FLASH for storing program code and how much RAM chip has.
+We need to  tell compiler linker how much FLASH for storing program code and how much RAM chip has. You can get this info from MCU datasheet.
 And we need to set the value of the end of the stack in _estack (0x20000000 + 20K).
 
 ```ld
@@ -150,7 +152,7 @@ Run ```arm-none-eabi-nm.exe 001.elf``` and you should get this:
 Run ```arm-none-eabi-objdump.exe -d .\001.elf``` to dissasemble elf file.
 
 ```disassembly
-.\001.elf:     file format elf32-littlearm
+001.elf:     file format elf32-littlearm
 
 
 Disassembly of section .text:
