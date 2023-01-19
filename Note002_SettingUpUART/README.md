@@ -1,7 +1,8 @@
+# Setting up UART communication with NUCLEO-L476RG. Sending strings with printf and recieving lines with interrupts to ringbuffer.
 
 In good part of my projects I need to enable some device logging over UART and sometimes I also need to send something to device over UART.
 This post sums up process of adding ```printf``` and ability to receive characters from UART in the device.
-In the end device will be able to echo back, characters it's received.
+In the end device will be able to echo back characters it's received.
 
 [Code for this post](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note002_SettingUpUART)
 
