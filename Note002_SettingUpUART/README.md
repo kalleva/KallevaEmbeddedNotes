@@ -1,5 +1,7 @@
-In good part of my projects I need to enable some device logging over and frequently I need to send something to device over UART.
+
+In good part of my projects I need to enable some device logging over UART and sometimes I also need to send something to device over UART.
 This post sums up process of adding ```printf``` and ability to receive characters from UART in the device.
+In the end device will be able to echo back, characters it's received.
 
 [Code for this post](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note002_SettingUpUART)
 
@@ -28,7 +30,7 @@ Stop bits: 1
 Parity: none
 ```
 
-Our application will wait for ```\n``` newline so it's useful to check in Termite in section Transmitted text ```Append CR-LF``` checkbox.
+Our application will wait for ```\n``` newline so it's useful to check in Termite in section Transmitted text ```Append CR-LF``` Radiobutton.
 
 ### 2. Adding ability to printf to UART
 
@@ -150,4 +152,4 @@ while ((ch = ringbuffer_read(&uart_rb)) != '\0')
     putchar(ch); /* Echo to UART */
 ``` 
 
-At this point you should be able to send lines ended with ```\n``` via UART and get them printed back to you.
+At this point you should be able to send lines ended with ```\n``` via UART (it should be added atomatically to your messages if you selected that ```Append CR-LF``` Radiobutton) and get them printed back to you.
