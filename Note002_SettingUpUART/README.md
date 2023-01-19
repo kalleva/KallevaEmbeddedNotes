@@ -1,6 +1,8 @@
 In good part of my projects I need to enable some device logging over and frequently I need to send something to device over UART.
 This post sums up process of adding ```printf``` and ability to receive characters from UART in the device.
 
+[Code for this post](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note002_SettingUpUART)
+
 ### Resources this post is based on:
 
 [Bare Metal STM32 Programming (Part 10): UART Communication](https://vivonomicon.com/2020/06/28/bare-metal-stm32-programming-part-10-uart-communication/) - part on UART from great series by **vivonomicon**.
