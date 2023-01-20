@@ -108,11 +108,12 @@ int main(void)
   {
 //    printf("Hello, World!\r\n");
 //    HAL_Delay(1000);
-
-     uint8_t ch = '\0';
-     while ((ch = ringbuffer_read(&uart_rb)) != '\0')
+    if (newline)
+    {
+      uint8_t ch = '\0';
+      while ((ch = ringbuffer_read(&uart_rb)) != '\0')
        putchar(ch); /* Echo to UART */
-
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

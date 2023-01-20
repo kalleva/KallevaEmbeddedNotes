@@ -148,9 +148,12 @@ void USART2_IRQHandler(void)
 And add this code to echo received line back to UART after we received newline character:
 
 ```C
-uint8_t ch = '\0';
-while ((ch = ringbuffer_read(&uart_rb)) != '\0')
+if (newline)
+{
+  uint8_t ch = '\0';
+  while ((ch = ringbuffer_read(&uart_rb)) != '\0')
     putchar(ch); /* Echo to UART */
+}
 ``` 
 
 At this point you should be able to send lines ended with ```\n``` via UART (it should be added atomatically to your messages if you selected that ```Append CR-LF``` Radiobutton) and get them printed back to you.
