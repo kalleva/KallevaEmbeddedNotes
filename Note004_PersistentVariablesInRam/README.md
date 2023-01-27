@@ -4,6 +4,8 @@ Sometimes you need to have some variable, that in the first start of your device
 
 Approach I use here is specific to the GNU Arm Embedded Toolchain.
 
+[Code](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note004_PersistentVariablesInRam) for the post.
+
 ### Prerequisites:
 
 - NUCLEO-L476RG board or any other device with STM32 MCU and the ability to print over UART.
