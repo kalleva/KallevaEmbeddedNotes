@@ -6,7 +6,6 @@ When MCU loads it will sample BOOT pin and it is pulled to Vdd it will load exec
 But sometimes you want the ability to from user application to bootloader without using BOOT pin.
 For example you just doesn't have access to BOOT pin on your board.
 In this post I will show how to do it for NUCLEO-L476RG.
-[Code](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note005_JumpingToSystemBootloader) for this post.
 
 ## Prerequisites
 
@@ -37,31 +36,9 @@ bool debounce_button(void)
 ```
 
 3. Before jumping to bootloader you need properly deinitialize all peripherals because they can interfere with proper execution of bootloader.
-Instead of going through all of them, it is simpler to set some magic variable on the button press that will not be cleared on MCU reset and reset MCU.
-
-Here we declare a variable that will hold magic value.
-
-```C
-uint32_t jump_to_boot_persistent __attribute__((section(".noinit")));
-```
-
-When button is pressed we set this variable to magic value and initiate reset.
-
-```C
-if (debounce_button())
-{
-  jump_to_boot_persistent = JUMP_TO_BOOT_VALUE;
-  NVIC_SystemReset();
-}
-```
-
+Instead of going through all of them, it is simpler to set some magic variable that will not be cleared on MCU reset and reset MCU.
 And with this we can add check if variable is equal to magic value at the very beginning of the ```main``` function before any peripherals get initialized.
 If it is equal to magic value we will set things up and jump to bootloader.
-
-```
-if (jump_to_boot_persistent == JUMP_TO_BOOT_VALUE)
-  initiate_jump_to_bootloader();
-```
 
 4. Performing jump to bootloader
 
@@ -89,7 +66,7 @@ void initiate_jump_to_bootloader(void)
 As I said for this MCU bootloader is located at ```0x1FFF0000```.
 We need to define function pointer ```sys_mem_boot_jump_func``` through which we will start execute bootloader code.
 After that we set the address from which we should execute code - ```UART_BOOTLOADER_ADDRESS + 4```.
-```+ 4``` is here because in first 4 bytes of System memory resides stack pointer.
+```+ 4`` is here because in first 4 bytes of System memory resides stack pointer.
 
 We set code at that address for execution through ```sys_mem_boot_jump_func```.
 
@@ -98,11 +75,11 @@ we reset RCC to its default state and disable and reset to default values SysTic
 
 After that we remap system memory to ```0x0000 0000```.
 Because memory need to be remapped to ```0x0000 0000``` before we start execute code from it.
-Flash gets also remapped from ```0x0800 0000``` before application starts from it.
+Flash gets also remapped from ```0x0800 0000` before application starts from it.
 
 Next we flush processor pipeline with __ISB() so next instruction will be fetched from cache or memory.
 
-And now all we need is to set stack pointer and we can perform jump to bootloader code.
+And now all we need is set stack pointer and we can perform jump to bootloader code.
 
 If you compile and load this NUCLEO, after you push the B1 button MCU will get in bootloader mode.
 You can check it if you start STM32CubeProgrammer and connect to board through UART interface.
