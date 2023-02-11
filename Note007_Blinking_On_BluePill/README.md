@@ -7,7 +7,7 @@ You can check it out because I will skip over some things that I described in th
 Blue pill board uses STM32F103C8 MCU. To start programming it in assembly you need to get [RM0008 Reference manual](https://www.st.com/resource/en/reference_manual/cd00171190-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf).
 And also [this overview](https://developer.arm.com/documentation/dui0473/m/arm-and-thumb-instructions/) of ARM assembly instructions will come in handy.
 
-This is [code for this post]().
+This is [code for this post](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note007_Blinking_On_BluePill).
 
 ## Initial template for the project
 
