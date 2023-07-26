@@ -117,7 +117,7 @@ We will set this value as a constant at the beginning of the ```core.s``` file.
 ```
 
 In the reset_handler function load ```RCC``` registers base address to ```r1```. After that load value of the ```RCC_APB2ENR``` configuration register to ```r2```. ```RCC_APB2ENR``` has offset ```0x18``` from the ```0x40021000``` ```RCC_BASE_ADDRESS```.
-As you can see in ```8.3.7 APB2 peripheral clock enable register (RCC_APB2ENR)``` section of reference manual to enable ```GPIOC``` you need set fifth bit in that register. You can do it with ```ORR`` instruction.
+As you can see in ```8.3.7 APB2 peripheral clock enable register (RCC_APB2ENR)``` section of reference manual to enable ```GPIOC``` you need set fifth bit in that register. You can do it with ```ORR``` instruction.
 And after that save that modified value back to memory, so it can take change.
 
 ```asm
