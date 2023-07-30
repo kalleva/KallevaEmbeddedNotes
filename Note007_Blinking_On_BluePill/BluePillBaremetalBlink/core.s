@@ -41,7 +41,7 @@ reset_handler:
   LDR r0, =GPIOC_ODR_PIN13_MASK
   MOV r2, #0                    @ r1 register will hold value which we will set on GPIOC_ODR register
 main_loop:
-  EOR r2, r2, r0                @ XOR GPIOC_ODR_PIN13_MASK with current value in r1. This will have effect of flipping the bit for PIN13
+  EOR r2, r2, r0                @ XOR GPIOC_ODR_PIN13_MASK with current value in r2. This will have effect of flipping the bit for PIN13
   STR r2, [r1, #0x0C]           @ Set ODR configuration
 
   @ Loop million times for delay
