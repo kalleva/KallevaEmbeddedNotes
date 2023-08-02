@@ -80,10 +80,10 @@ setting corresponding bit in RCC_APB2ENR registe
 
 ```asm
 LDR r3, =RCC_AHB2ENR_ADDRESS_OFFSET
-LDR r1, =RCC_BASE_ADDRESS @ Load RCC registers base address
-LDR r2, [r1, r3] @ Load RCC_AHB2ENR register configuration
-ORR r2, r2, RCC_AHB2ENR_GPIOA_EN @ Set bit to enable GPIOA
-STR r2, [r1, r3] @ Store modified RCC_APB2ENR register configuration
+LDR r1, =RCC_BASE_ADDRESS                 @ Load RCC registers base address
+LDR r2, [r1, r3]                          @ Load RCC_AHB2ENR register configuration
+ORR r2, r2, RCC_AHB2ENR_GPIOA_EN          @ Set bit to enable GPIOA
+STR r2, [r1, r3]                          @ Store modified RCC_APB2ENR register configuration
 ```
 
 5. After that there is section to configure PA5 bit as output 
@@ -91,15 +91,15 @@ push-pull low-speed pin.
 
 ```asm
 LDR r3, =GPIOA_MODER_ADDRESS_OFFSET
-LDR r1, =GPIOA_BASE_ADDRESS @ Load GPIOA registers base address
-LDR r2, [r1, r3] @ Load GPIOA_MODER Register value in r2
-LDR r4, =GPIO_MODER_PIN5_MASK @ Load GPIOA_MODER_PIN5_MASK so we can work with only PA5 pin configuration
-BIC r2, r2, r4 @ Clear configuration for PA5
+LDR r1, =GPIOA_BASE_ADDRESS               @ Load GPIOA registers base address
+LDR r2, [r1, r3]                          @ Load GPIOA_MODER Register value in r2
+LDR r4, =GPIO_MODER_PIN5_MASK             @ Load GPIOA_MODER_PIN5_MASK so we can work with only PA5 pin configuration
+BIC r2, r2, r4                            @ Clear configuration for PA5
  
 @ Configure pin as general purpose output mode
-LDR r4, =GPIO_MODER_PIN5_OUTPUT @ Load value of PC5 pin configuration
-ORR r2, r2, r4 @ Set this value in register
-STR r2, [r1, r3] @ Store value back to the register
+LDR r4, =GPIO_MODER_PIN5_OUTPUT           @ Load value of PC5 pin configuration
+ORR r2, r2, r4                            @ Set this value in register
+STR r2, [r1, r3]                          @ Store value back to the register
 	
 @ Leave GPIOA_OTYPER Register PIN5 configuration to reset value: Output push-pull
 @ Leave GPIOA_OSPEEDR Register PIN5 configuration to reset value: Low speed 	
@@ -120,8 +120,8 @@ flipped with a help of XOR of it's current value with SET_MASK and RESET_MASK.
 ```asm
 STR r6, [r1, r0] @ Store configuration to BSRR register
 
-EOR r6, r2 @ Flip PIN5 Enable bit. 
-EOR r6, r3 @ Flip PIN5 Disable bit
+EOR r6, r2                                @ Flip PIN5 Enable bit. 
+EOR r6, r3                                @ Flip PIN5 Disable bit
 @ Because it started with Enable bit set and Disable bit reset
 @ it will flip to opposite states, so Enable and Disable will
 @ not be 1 at the same time
