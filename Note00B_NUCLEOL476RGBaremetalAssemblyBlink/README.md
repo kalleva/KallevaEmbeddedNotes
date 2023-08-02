@@ -7,7 +7,7 @@ It has STM32L476RGT6 MCU.
 In this post I will describe how to write simple one file assembly program
 that will make the board blink with it's onboard LED2 and then I will show
 how to debug it with GDB.
-[Full code on GitHub]()
+[Source code on GitHub](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note00B_NUCLEOL476RGBaremetalAssemblyBlink)
 
 This post will closely follow my [previous post for BluePill](https://kalleva.bearblog.dev/note-007-blinking-with-led-on-blue-pill-with-assembly/).
 
