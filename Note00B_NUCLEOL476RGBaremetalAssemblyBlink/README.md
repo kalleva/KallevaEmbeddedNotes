@@ -112,7 +112,7 @@ and to turn pin LOW the correspondig BR bit in the same register
 also should bet set.
 I store the configuration for PA5 pin in register ```r6```.
 Initially it is set HIGH.
-And inside of a ```main_loop``` value inside ```r6`` is stored as a
+And inside of a ```main_loop``` value inside ```r6``` is stored as a
 configureaton for the BSRR register. 
 After that the bits inside ```r6``` for setting and resetting PA5 pin are
 flipped with a help of XOR of it's current value with SET_MASK and RESET_MASK.
