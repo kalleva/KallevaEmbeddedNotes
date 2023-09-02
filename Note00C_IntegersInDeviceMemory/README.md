@@ -5,6 +5,8 @@ parameters needed for firmware to work.
 Usually they are stored ether in device FLASH on separate page separated
 from firmware code ether in device EEPROM.
 
+[Code](https://github.com/kalleva/KallevaEmbeddedNotes/tree/master/Note00C_IntegersInDeviceMemory) for this post
+
 There is number of ways that parameters usually can be stored in non-volatile
 memory and I tried to go through the most common cases I usually meet in the
 wild. For modeling memory of the device I used several byte arrays.
@@ -20,7 +22,7 @@ But first two words about how integers can be store big or little endian in
 device memory. Lets look at ```uint32 val = 1```, val can be stored in memory
 in little endian way like this
 
-```
+```C
 Memory address | value on that address
 0x00000000     | 0x01
 0x00000001     | 0x00
@@ -30,7 +32,7 @@ Memory address | value on that address
 
 Or in a big endian way:
 
-```
+```C
 Memory address | value on that address
 0x00000000     | 0x00
 0x00000001     | 0x00
@@ -44,7 +46,7 @@ important thing is not to mix both of them at the same time.
 
 Following are the two arrays I will use for demonstration:
 
-```
+```C
 uint8_t device_memory_little_endian[] = {
 	0x01, 0x00, 0x00, 0x00, /* First word contains u32 = 1 */
 	0x02, 0x00, 0x00, 0x00, /* Second word contains u32 = 2 */
@@ -53,7 +55,7 @@ uint8_t device_memory_little_endian[] = {
 }
 ```
 
-```
+```C
 uint8_t device_memory_big_endian[] = {
 	0x00, 0x00, 0x00, 0x01, /* First word contains u32 = 1 */
 	0x00, 0x00, 0x00, 0x02, /* Second word contains u32 = 2 */
@@ -65,7 +67,9 @@ uint8_t device_memory_big_endian[] = {
 To read uint32_t value from the memory address, just get the value,
 to which pointer to uint32_t points. This is the simplest case.
 
-```uint32_t word = *(uint32_t *)device_memory_little_endian;```
+```C
+uint32_t word = *(uint32_t *)device_memory_little_endian;
+```
 
 First four bytes in ```device_memory_little_endian``` array are
 ```0x01, 0x00, 0x00, 0x00``` which in little endian will mean just 1.
@@ -81,7 +85,7 @@ processing to get value from that 4 byte word. This will be common theme for
 other cases where we will want to get integer values smaller then the size of
 chunk we read from memory.
 
-```
+```C
   word = *(uint32_t *)(device_memory_little_endian + 8);
   u16 = word & 0xFFFF;
   assert(u16 == 3);
@@ -106,7 +110,7 @@ because this name is reserved for packing individual integers and not for order
 of elements in the stored array.
 So if I have this array:
 
-```
+```C
 uint8_t key[8] = {
     0x00, 0x01, 0x02, 0x03,
     0x04, 0x02, 0x03, 0x04
@@ -138,7 +142,7 @@ The thing to remember here is, as I mentioned earlier, to get stored values
 in a proper order from memory (proper is relative, here it means the way you
 stored them to memory before)
 
-```
+```C
 word = *(uint32_t *)(device_memory_little_endian + 12);
 u8 = word & 0xFF;
 assert(u8 == 5);
@@ -159,7 +163,7 @@ in words that will be read from memory would have their bytes reversed.
 Here are two macros to reverse the order of bytes in two byte and four byte
 integers.
 
-```
+```C
 #define REVERSE_BYTES_INT(x)                                                   \
   (((x) >> 24) | (uint32_t)((x) >> 16 & 0xFF) << 8 |                           \
    (uint32_t)((x) >> 8 & 0xFF) << 24 | (uint32_t)((x)&0xFF) << 24)
@@ -171,7 +175,7 @@ So uint32_t integer stored in a big endian will have its bytes reversed
 and to get proper stored value from it, there is a need to use
 REVERSE_BYTES_INT macro.
 
-```
+```C
 word = *(uint32_t *)(device_memory_big_endian);
 u32 = REVERSE_BYTES_INT(word);
 assert(u32 == 1);
@@ -185,7 +189,7 @@ bytes inside these two byte integers are reversed. So after getting establishing
 which two bytes belong to the current two byte integer there is a need to
 reverse byte order in that integer with REVERSE_BYTES_SHORT macro.
 
-```
+```C
 word = *(uint32_t *)(device_memory_big_endian + 8);
 u16 = REVERSE_BYTES_SHORT(word & 0xFFFF);
 assert(u16 == 3);
@@ -200,7 +204,7 @@ watched for is that the bytes are retrieved from the word read from memory in
 the same way as they were written to it. As can bee seen the code is the same
 as for reading one byte values from ```device_memory_little_endian```.
 
-```
+```C
 word = *(uint32_t *)(device_memory_big_endian + 12);
 u8 = word & 0xFF;
 assert(u8 == 5);
@@ -221,7 +225,7 @@ were written to memory should be preserved.
 To illustrate my point I created two arrays that mimic one word of memory of the
 device, each contain one uint8_t and next to it uin16_t:
 
-```
+```C
 uint8_t device_memory_little_endian_mixed[] = {
 	0x01, /* u8 = 1 */
 	0x02, 0x00, /* u16 = 2 */
@@ -238,7 +242,7 @@ uint8_t device_memory_big_endian_mixed[] = {
 This is how to get stored integer values where multibyte integers stored in the
 little endian way:
 
-```
+```C
 word = *(uint32_t *)(device_memory_little_endian_mixed);
 u8 = word & 0xFF;
 assert(u8 == 1);
@@ -249,7 +253,7 @@ assert(u16 == 2);
 And this is the same thing but for a case where multibyte integers stored in the
 big endian way:
 
-```
+```C
 word = *(uint32_t *)(device_memory_big_endian_mixed);
 u8 = word & 0xFF;
 assert(u8 == 1);
