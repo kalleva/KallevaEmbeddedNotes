@@ -48,19 +48,19 @@ Following are the two arrays I will use for demonstration:
 
 ```C
 uint8_t device_memory_little_endian[] = {
-	0x01, 0x00, 0x00, 0x00, /* First word contains u32 = 1 */
-	0x02, 0x00, 0x00, 0x00, /* Second word contains u32 = 2 */
-	0x03, 0x00, 0x04, 0x00, /* Third word contains u16 = 3 and u16 = 4 */
-    0x05, 0x00, 0x00, 0x00  /* Fourth word contains u8 = 5 */
+  0x01, 0x00, 0x00, 0x00, /* First word contains u32 = 1 */
+  0x02, 0x00, 0x00, 0x00, /* Second word contains u32 = 2 */
+  0x03, 0x00, 0x04, 0x00, /* Third word contains u16 = 3 and u16 = 4 */
+  0x05, 0x00, 0x00, 0x00  /* Fourth word contains u8 = 5 */
 }
 ```
 
 ```C
 uint8_t device_memory_big_endian[] = {
-	0x00, 0x00, 0x00, 0x01, /* First word contains u32 = 1 */
-	0x00, 0x00, 0x00, 0x02, /* Second word contains u32 = 2 */
-	0x00, 0x03, 0x00, 0x04, /* Third word contains u16 = 3 and u16 = 4 */
-    0x05, 0x00, 0x00, 0x00 /* Fourth word contains u8 = 5 */
+  0x00, 0x00, 0x00, 0x01, /* First word contains u32 = 1 */
+  0x00, 0x00, 0x00, 0x02, /* Second word contains u32 = 2 */
+  0x00, 0x03, 0x00, 0x04, /* Third word contains u16 = 3 and u16 = 4 */
+  0x05, 0x00, 0x00, 0x00 /* Fourth word contains u8 = 5 */
 ```
 
 ## Read uint32_t little endian
@@ -86,12 +86,12 @@ other cases where we will want to get integer values smaller then the size of
 chunk we read from memory.
 
 ```C
-  word = *(uint32_t *)(device_memory_little_endian + 8);
-  u16 = word & 0xFFFF;
-  assert(u16 == 3);
-  /* Next stored uint16_t */
-  u16 = word >> 16 & 0xFFFF;
-  assert(u16 == 4);
+word = *(uint32_t *)(device_memory_little_endian + 8);
+u16 = word & 0xFFFF;
+assert(u16 == 3);
+/* Next stored uint16_t */
+u16 = word >> 16 & 0xFFFF;
+assert(u16 == 4);
 ```
 
 Here first read the whole 4 byte word. Then get first u16 integer take
@@ -112,8 +112,8 @@ So if I have this array:
 
 ```C
 uint8_t key[8] = {
-    0x00, 0x01, 0x02, 0x03,
-    0x04, 0x02, 0x03, 0x04
+  0x00, 0x01, 0x02, 0x03,
+  0x04, 0x05, 0x06, 0x07
 }
 ```
 
@@ -227,15 +227,15 @@ device, each contain one uint8_t and next to it uin16_t:
 
 ```C
 uint8_t device_memory_little_endian_mixed[] = {
-	0x01, /* u8 = 1 */
-	0x02, 0x00, /* u16 = 2 */
-	0x00
+  0x01, /* u8 = 1 */
+  0x02, 0x00, /* u16 = 2 */
+  0x00
 };
 
 uint8_t device_memory_big_endian_mixed[] = {
-	0x01, /* u8 = 1 */ 
-	0x00, 0x02, /* u16 = 2 */
-	0x00
+  0x01, /* u8 = 1 */
+  0x00, 0x02, /* u16 = 2 */
+  0x00
 };
 ```
 
